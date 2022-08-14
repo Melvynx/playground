@@ -65,7 +65,20 @@ function constructSnippet(
           }).code;
           const script = document.createElement("script");
           script.type = "module";
-          script.innerHTML = code;
+
+          let innerHTMLCode = "";
+
+          if (${presets.includes("react")}) {
+            innerHTMLCode += \`import React, { createElement } from "https://cdn.skypack.dev/react"; 
+import ReactDOM from "https://cdn.skypack.dev/react-dom";
+const render = () => { 
+  const root = document.getElementById('app'); 
+  ReactDOM.render(React.createElement(App), root); 
+};\`;
+          }
+
+          innerHTMLCode += code;
+          script.innerHTML = innerHTMLCode;
           document.body.appendChild(script);
         </script>
       `;
